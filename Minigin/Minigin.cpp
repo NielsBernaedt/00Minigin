@@ -81,7 +81,7 @@ void Minigin::Cleanup()
 	m_Window = nullptr;
 	SDL_Quit();
 }
-
+//second push test
 void Minigin::Run()
 {
 	Initialize();
