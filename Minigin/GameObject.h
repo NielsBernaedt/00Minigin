@@ -1,21 +1,20 @@
 #pragma once
 #include "BaseComponent.h"
 #include "Transform.h"
-#include "SceneObject.h"
 
 class Texture2D;
-class GameObject final : public SceneObject 
+class GameObject final
 {
 public:
-	void Update(float deltaTime) override;
-	void Render() const override;
+	void Update(float deltaTime);
+	void Render() const;
 
-	void SetTexture(const std::string& filename);
 	void SetPosition(float x, float y);
 	void AddComponent(std::shared_ptr<BaseComponent> component);
+	std::vector<std::shared_ptr<BaseComponent>> GetAllComponents() const { return m_Components; };
 
 	GameObject() = default;
-	virtual ~GameObject();
+	~GameObject();
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;
 	GameObject& operator=(const GameObject& other) = delete;
@@ -23,6 +22,5 @@ public:
 
 private:
 	Transform m_Transform;
-	std::shared_ptr<Texture2D> m_Texture{}; //Is not supposed to be here, change in future
 	std::vector<std::shared_ptr<BaseComponent>> m_Components{};
 };

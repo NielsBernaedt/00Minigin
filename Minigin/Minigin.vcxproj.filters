@@ -21,7 +21,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RenderComponent.h">
+    <ClInclude Include="RenderComponents.h">
       <Filter>Objects\Components</Filter>
     </ClInclude>
     <ClInclude Include="FPSComponent.h">
@@ -31,9 +31,6 @@
       <Filter>Objects\Components</Filter>
     </ClInclude>
     <ClInclude Include="BaseComponent.h">
-      <Filter>Objects\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="TextComponent.h">
       <Filter>Objects\Components</Filter>
     </ClInclude>
     <ClInclude Include="Minigin.h">
@@ -63,9 +60,6 @@
     <ClInclude Include="Singleton.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="SceneObject.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Minigin</Filter>
     </ClInclude>
@@ -92,10 +86,7 @@
     <ClCompile Include="FPSComponent.cpp">
       <Filter>Objects\Components</Filter>
     </ClCompile>
-    <ClCompile Include="RenderComponent.cpp">
-      <Filter>Objects\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="TextComponent.cpp">
+    <ClCompile Include="RenderComponents.cpp">
       <Filter>Objects\Components</Filter>
     </ClCompile>
     <ClCompile Include="Minigin.cpp">

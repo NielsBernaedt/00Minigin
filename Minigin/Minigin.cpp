@@ -9,7 +9,7 @@
 #include <SDL.h>
 
 #include "FPSComponent.h"
-#include "RenderComponent.h"
+#include "RenderComponents.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include "Texture2D.h"
@@ -47,31 +47,29 @@ void Minigin::LoadGame() const
 {
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	auto go = std::make_shared<GameObject>();
-	go->SetTexture("background.jpg");
-	scene.Add(go);
+	auto background = std::make_shared<GameObject>();
+	std::shared_ptr<Texture2D> backgroundTexture = ResourceManager::GetInstance().LoadTexture("background.jpg");
+	const std::shared_ptr<TextureRenderComponent> backgroundRenderComp = std::make_shared<TextureRenderComponent>(background.get(), backgroundTexture, 0, 0, 1000, 1000);
+	background->AddComponent(backgroundRenderComp);
+	scene.Add(background);
 
-	//go = std::make_shared<GameObject>();
-	//go->SetTexture("logo.png");
-	//go->SetPosition(216, 180);
-	//scene.Add(go);
+	auto logo = std::make_shared<GameObject>();
+	std::shared_ptr<Texture2D> logoTexture = ResourceManager::GetInstance().LoadTexture("logo.png");
+	const std::shared_ptr<TextureRenderComponent> logoRenderComp = std::make_shared<TextureRenderComponent>(logo.get(), logoTexture, 0, 300, 200, 150);
+	logo->AddComponent(logoRenderComp);
+	scene.Add(logo);
 
-	//Cuz Textobj is removed, its now a component
-	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	//auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	//to->SetPosition(80, 20);
-	//scene.Add(to);
+	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 
 	auto fpsCounterObject = std::make_shared<GameObject>();
-	//FPSComponent fpsComponent{};
-	std::shared_ptr<BaseComponent> fpsComponent = std::make_shared<FPSComponent>();
+	const std::shared_ptr<FPSComponent> fpsComponent = std::make_shared<FPSComponent>( fpsCounterObject.get() );
 	fpsCounterObject->AddComponent(fpsComponent);
 	scene.Add(fpsCounterObject);
 
-
-	auto testGameObject = std::make_shared<GameObject>();
-	std::shared_ptr<Texture2D> testTexture = ResourceManager::GetInstance().LoadTexture("logo.png");
-	std::shared_ptr<BaseComponent> testRenderComponent = std::make_shared<RenderComponent>(&Renderer::GetInstance(), testTexture, 216, 180, 50, 50);
+	auto textTest = std::make_shared<GameObject> ();
+	const std::shared_ptr<TextRenderComponent> textComp = std::make_shared<TextRenderComponent>(textTest.get(),font, "Programming 4 Assignment", 100, 100);
+	textTest->AddComponent(textComp);
+	scene.Add(textTest);
 }
 
 void Minigin::Cleanup()

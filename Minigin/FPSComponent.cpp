@@ -1,25 +1,24 @@
 #include "MiniginPCH.h"
 #include "FPSComponent.h"
-#include "ResourceManager.h"
-#include "TextComponent.h"
 
-FPSComponent::FPSComponent()
+#include "GameObject.h"
+#include "ResourceManager.h"
+#include "RenderComponents.h"
+#include "Renderer.h"
+
+FPSComponent::FPSComponent(GameObject* gameObject)
+	: BaseComponent( gameObject )
 {
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	FPSCounter = std::make_shared<TextRenderComponent>(m_OwnerObject, font, "144:", 0, 0);
 
-	FPSCounter = std::make_shared<TextComponent>("144:", font);
-	FPSCounter->SetPosition(0, 50);
+	m_OwnerObject->AddComponent(FPSCounter);
 }
-FPSComponent::~FPSComponent()
-{
-}
-
 
 void FPSComponent::Update(float deltaTime)
 {
 	m_FramesPerSecond = int(1.0f / deltaTime);
 	FPSCounter->SetText(std::to_string(m_FramesPerSecond));
-	FPSCounter->Update(deltaTime);
 }
 
 void FPSComponent::Render() const
