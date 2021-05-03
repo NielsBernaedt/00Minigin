@@ -1,6 +1,5 @@
 #pragma once
 #include "BaseComponent.h"
-#include "Transform.h"
 
 class Texture2D;
 class GameObject final
@@ -21,6 +20,5 @@ public:
 	GameObject& operator=(GameObject&& other) = delete;
 
 private:
-	Transform m_Transform;
 	std::vector<std::shared_ptr<BaseComponent>> m_Components{};
 };

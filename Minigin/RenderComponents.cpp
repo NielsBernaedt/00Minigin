@@ -7,12 +7,20 @@
 #include "Renderer.h"
 #include "Font.h"
 #include "Texture2D.h"
-
+/////////////////////////////////////TEXTURERENDERER////////////////////////////////////
 TextureRenderComponent::TextureRenderComponent(GameObject* gameObject, std::shared_ptr<Texture2D> texture, int x, int y, int width, int height)
 	: BaseComponent( gameObject )
 	, m_Texture{texture}
 	, m_DstRect{x, y, width, height}
 {
+	SDL_QueryTexture(m_Texture->GetSDLTexture(), NULL, NULL, &m_DstRect.w, &m_DstRect.h);
+}
+TextureRenderComponent::TextureRenderComponent(GameObject* gameObject, std::shared_ptr<Texture2D> texture)
+	: BaseComponent(gameObject)
+	, m_Texture{ texture }
+	, m_DstRect{ 0, 0, 0, 0 }
+{
+	SDL_QueryTexture(m_Texture->GetSDLTexture(), NULL, NULL, &m_DstRect.w, &m_DstRect.h);
 }
 
 void TextureRenderComponent::Update(float)
@@ -24,6 +32,12 @@ void TextureRenderComponent::Render() const
 	Renderer::GetInstance().RenderTexture(*m_Texture, float(m_DstRect.x), float(m_DstRect.y), float(m_DstRect.w), float(m_DstRect.h));
 }
 
+void TextureRenderComponent::SetDimensions(int w, int h)
+{
+	m_DstRect.w = w;
+	m_DstRect.h = h;
+}
+
 //////////////////////////////////////TEXTRENDERER//////////////////////////////////////
 
 TextRenderComponent::TextRenderComponent(GameObject* gameObject, std::shared_ptr<Font> font, const std::string& text, int x, int y, int width, int height)
@@ -33,6 +47,15 @@ TextRenderComponent::TextRenderComponent(GameObject* gameObject, std::shared_ptr
 	, m_Texture{ nullptr }
 	, m_NeedsUpdate( true )
 	, m_DstRect{ x, y, width, height }
+{
+}
+TextRenderComponent::TextRenderComponent(GameObject* gameObject, std::shared_ptr<Font> font, const std::string& text)
+	: BaseComponent(gameObject)
+	, m_Font{ font }
+	, m_Text{ text }
+	, m_Texture{ nullptr }
+	, m_NeedsUpdate(true)
+	, m_DstRect{ 0, 0, 0, 0 }
 {
 }
 
@@ -69,4 +92,22 @@ void TextRenderComponent::SetText(const std::string& text)
 {
 	m_Text = text;
 	m_NeedsUpdate = true;
+}
+
+///////////////////////////////////////POLYRENDERER///////////////////////////////////////
+
+PolyRenderComponent::PolyRenderComponent(GameObject* gameObject, std::vector<int> vertices)
+	: BaseComponent(gameObject)
+	, m_Vertices{vertices}
+{
+	
+}
+
+void PolyRenderComponent::Update(float)
+{
+}
+
+void PolyRenderComponent::Render() const
+{
+	
 }
