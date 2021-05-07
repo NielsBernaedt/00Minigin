@@ -1,5 +1,6 @@
 #include "MiniginPCH.h"
 #include "TransformComponent.h"
+#include "GameObject.h"
 
 TransformComponent::TransformComponent(GameObject* gameObject, glm::vec3 position)
 	: BaseComponent( gameObject )
@@ -15,4 +16,5 @@ const glm::vec3& TransformComponent::GetPosition() const
 void TransformComponent::SetPosition(float x, float y, float z)
 {
 	m_Position = { x, y, z };
+	//m_OwnerObject->SetPosition();
 }
